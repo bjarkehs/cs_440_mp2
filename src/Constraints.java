@@ -13,6 +13,7 @@ public class Constraints {
 	public int numOfEmployees;
 	public int numOfTimeSlots;
 	public Employee[] employees;
+	public int[][] traveltimes;
 	
 	public Constraints(String filePath) {
 		try {
@@ -35,6 +36,7 @@ public class Constraints {
 						matcher = pMeetings.matcher(line);
 						if (matcher.find()) {
 							numOfMeetings = Integer.parseInt(matcher.group(1));
+							traveltimes = new int[numOfMeetings+1][numOfMeetings+1];
 						}
 					}
 					else if (y == 1) {
@@ -69,6 +71,19 @@ public class Constraints {
 								numbers.add(Integer.parseInt(m.group()));
 							}
 							employees[employee] = new Employee(numbers);
+						}
+					}
+					
+					if (checkingTravel) {
+						matcher = pCheckMeetings.matcher(line);
+						if (matcher.find()) {
+							int meeting = Integer.parseInt(matcher.group(1));
+							Matcher m = pNumberMeetings.matcher(matcher.group(2));
+							int k = 1;
+							while (m.find()) {
+								traveltimes[meeting][k] = Integer.parseInt(m.group());
+								k++;
+							}
 						}
 					}
 					
