@@ -13,6 +13,7 @@ public class Constraints {
 	public int numOfEmployees;
 	public int numOfTimeSlots;
 	public Employee[] employees;
+	public Meeting[] meetings;
 	public int[][] traveltimes;
 	
 	public Constraints(String filePath) {
@@ -37,6 +38,10 @@ public class Constraints {
 						if (matcher.find()) {
 							numOfMeetings = Integer.parseInt(matcher.group(1));
 							traveltimes = new int[numOfMeetings+1][numOfMeetings+1];
+							meetings = new Meeting[numOfMeetings+1];
+							for (int i = 1; i <= numOfMeetings; i++) {
+								meetings[i] = new Meeting(i);
+							}
 						}
 					}
 					else if (y == 1) {
@@ -64,13 +69,18 @@ public class Constraints {
 					if (checkingMeetings) {
 						matcher = pCheckMeetings.matcher(line);
 						if (matcher.find()) {
-							int employee = Integer.parseInt(matcher.group(1));
+							int employeeName = Integer.parseInt(matcher.group(1));
+							Employee emp = new Employee(employeeName);
+							employees[employeeName] = emp;
 							Matcher m = pNumberMeetings.matcher(matcher.group(2));
-							List<Integer> numbers = new ArrayList<Integer>();
+							List<Meeting> tempMeetings = new ArrayList<Meeting>();
 							while (m.find()) {
-								numbers.add(Integer.parseInt(m.group()));
+								int meetingName = Integer.parseInt(m.group());
+								Meeting tmpMeeting = meetings[meetingName];
+								tempMeetings.add(tmpMeeting);
+								tmpMeeting.addEmployee(emp);
 							}
-							employees[employee] = new Employee(numbers);
+							emp.setMeetings(tempMeetings);
 						}
 					}
 					
