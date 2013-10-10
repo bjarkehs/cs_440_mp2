@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -11,6 +13,16 @@ public class Main {
 		
 		if (result) {
 			System.out.println("Meetings Arranged");
+			for (int i=1; i<= problem.numOfMeetings; i++) {
+				if (btt.solution.timeSlots.get(i) != null) {
+					List<Meeting> temp = btt.solution.timeSlots.get(i);
+					for (int j=0; j < temp.size(); j++) {
+						Meeting m = temp.get(j);
+						System.out.println("Meeting at time slot "+i+" is : "+m.name);
+					}
+					
+				}
+			}
 		}
 		System.out.println("DONE");
 	}
