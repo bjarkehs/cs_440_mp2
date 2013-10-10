@@ -1,18 +1,18 @@
 import java.util.*; 
 
 public class BTTreeNode {
-	public List<List<Integer>> timeSlots;
-	public PriorityQueue<Integer> meetings;
+	public List<List<Meeting>> timeSlots;
+	public PriorityQueue<Meeting> meetings;
 	public BTTreeNode parent;
 	
 	public BTTreeNode() {
-		this.timeSlots = new ArrayList<List<Integer>>();
-		this.meetings = new PriorityQueue<Integer>();
+		this.timeSlots = new ArrayList<List<Meeting>>();
+		this.meetings = new PriorityQueue<Meeting>();
 	}
 	
-	public BTTreeNode(List<List<Integer>> ts, PriorityQueue<Integer> m, BTTreeNode p) {
-		this.timeSlots = new ArrayList<List<Integer>>(ts);
-		this.meetings = new PriorityQueue<Integer>(m);
+	public BTTreeNode(PriorityQueue<Meeting> m, BTTreeNode p) {
+		this.timeSlots = new ArrayList<List<Meeting>>(p.timeSlots);
+		this.meetings = new PriorityQueue<Meeting>(m);
 		this.parent = p;
 	}
 }

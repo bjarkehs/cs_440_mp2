@@ -1,11 +1,11 @@
 import java.util.Comparator;
 
-public class MeetingsComparator implements Comparator<Integer> {
-    public int compare(Integer a, Integer b) {
-    	if (a < b) {
+public class MeetingsComparator implements Comparator<Meeting> {
+    public int compare(Meeting a, Meeting b) {
+    	if (a.name < b.name) {
 	        return -1;
 	    }
-	    if (a > b) {
+	    if (a.name > b.name) {
 	        return 1;
 	    }
 	    return 0;

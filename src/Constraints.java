@@ -2,7 +2,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,13 +14,15 @@ public class Constraints {
 	public int numOfEmployees;
 	public int numOfTimeSlots;
 	public Employee[] employees;
-	public Meeting[] meetings;
+	public PriorityQueue<Meeting> meetings;
 	public int[][] traveltimes;
 	
 	public Constraints(String filePath) {
 		try {
 			File aFile = new File(filePath);
 			BufferedReader input = new BufferedReader(new FileReader(aFile));
+			Comparator<Meeting> comparator = new MeetingsComparator();
+			meetings = new PriorityQueue<Meeting>(30,comparator);
 			
 			try {
 				Pattern pMeetings = Pattern.compile("Number of meetings: (\\d*)");
