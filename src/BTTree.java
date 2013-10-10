@@ -9,6 +9,10 @@ public class BTTree {
 		this.root.timeSlots = new ArrayList<Integer[]>(t);
 		this.root.meetings = m;
 	}
+	
+	public boolean checkAssignment(int m, int loc, Constraints c) {
+		return false;
+	}
 
 	public boolean backTracking(BTTreeNode n, Constraints c) {
 		if (n.meetings.isEmpty()) {
@@ -17,8 +21,11 @@ public class BTTree {
 		}
 		int m = n.meetings.poll();
 		//System.out.println(m);
-		
-		
+		for (int i = 1; i<=n.timeSlots.size(); i++) {
+			if (checkAssignment(m,i,c)) {
+				
+			}
+		}
 		
 		return false;
 	}
