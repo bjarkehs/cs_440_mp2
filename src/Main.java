@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Constraints problem = new Constraints("problem2.txt");
+		Constraints problem = new Constraints("example.txt");
 		//System.out.println(problem.employees[10].meetings.toString());
 		
 		Comparator<Meeting> comparator = new MeetingsComparator();

@@ -15,6 +15,7 @@ public class Constraints {
 	public int numOfTimeSlots;
 	public Employee[] employees;
 	public PriorityQueue<Meeting> meetings;
+	public Meeting[] listOfMeetings;
 	public int[][] traveltimes;
 	
 	public Constraints(String filePath) {
@@ -41,9 +42,11 @@ public class Constraints {
 						if (matcher.find()) {
 							numOfMeetings = Integer.parseInt(matcher.group(1));
 							traveltimes = new int[numOfMeetings+1][numOfMeetings+1];
-							meetings = new Meeting[numOfMeetings+1];
+							listOfMeetings = new Meeting[numOfMeetings+1];
 							for (int i = 1; i <= numOfMeetings; i++) {
-								meetings[i] = new Meeting(i);
+								Meeting tmpMeet = new Meeting(i);
+								meetings.add(tmpMeet);
+								listOfMeetings[i] = tmpMeet;
 							}
 						}
 					}
@@ -79,7 +82,7 @@ public class Constraints {
 							List<Meeting> tempMeetings = new ArrayList<Meeting>();
 							while (m.find()) {
 								int meetingName = Integer.parseInt(m.group());
-								Meeting tmpMeeting = meetings[meetingName];
+								Meeting tmpMeeting = listOfMeetings[meetingName];
 								tempMeetings.add(tmpMeeting);
 								tmpMeeting.addEmployee(emp);
 							}
