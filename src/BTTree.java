@@ -21,6 +21,9 @@ public class BTTree {
 		}
 		
 		for (int i = (loc-2); i <= loc+2; i++) {
+			if (i <= 0 || i >= ts.size()) {
+				continue;
+			}
 			for (Meeting mt : ts.get(i)) {
 				if (mt == m) {
 					continue;
