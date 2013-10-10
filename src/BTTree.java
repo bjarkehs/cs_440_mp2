@@ -15,6 +15,28 @@ public class BTTree {
 	}
 	
 	public boolean checkAssignment(int m, int loc, List<List<Integer>> ts, Constraints c) {
+		for (Meeting tmpM : c.meetings) {
+			if (tmpM.name == m) {
+				checkAssignmentForMeeting(tmpM, loc, ts, c);
+			}
+		}
+		return false;
+	}
+	
+	private boolean checkAssignmentForMeeting(Meeting m, int loc, List<List<Integer>> ts, Constraints c) {
+		Set<Meeting> setOfMeetings = new HashSet<Meeting>();
+		for (Employee emp : m.employees) {
+			setOfMeetings.addAll(emp.meetings);
+		}
+		
+		for (int i = (loc-2); i <= loc+2; i++) {
+			for (Meeting mt : ts.get(i)) {
+				if (setOfMeetings.contains(mt) && c.traveltimes[m.name][mt.name] > Math.abs(loc-i)) {
+					;
+				}
+			}
+		}
+		
 		return false;
 	}
 
