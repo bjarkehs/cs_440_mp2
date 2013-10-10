@@ -7,11 +7,8 @@ public class Main {
 		Constraints problem = new Constraints("problem2.txt");
 		//System.out.println(problem.employees[10].meetings.toString());
 		
-		Comparator<Integer> comparator = new MeetingsComparator();
-		PriorityQueue<Integer> m = new PriorityQueue<Integer>(30,comparator);
-		for (int i = 1; i<= problem.numOfMeetings; i++) {
-			m.add(i);
-		}
+		Comparator<Meeting> comparator = new MeetingsComparator();
+		PriorityQueue<Meeting> m = new PriorityQueue<Meeting>(30,comparator);
 		
 		BTTree btt = new BTTree(problem.numOfTimeSlots,m);		
 		
