@@ -18,9 +18,23 @@ public class BTTree {
 	}
 	
 	public boolean checkAssignment(Meeting m, int loc, List<List<Meeting>> ts) {
+		//System.out.println("Meeting: "+ m.name);
 		Set<Meeting> setOfMeetings = new HashSet<Meeting>();
 		for (Employee emp : m.employees) {
 			setOfMeetings.addAll(emp.meetings);
+		}
+		
+		//System.out.println("Conflicting meetings: " + setOfMeetings);
+		
+		Set<Meeting> timeSlotMeetings = new HashSet<Meeting>();
+		
+		for (List<Meeting> lm : ts) {
+			timeSlotMeetings.addAll(lm);
+		}
+		
+		if (timeSlotMeetings.contains(m)) {
+			System.out.println("Already there");
+			return false;
 		}
 		
 		//System.out.println("Meetings: " +ts.get(loc) + " at timeslot: " +loc);
@@ -29,9 +43,6 @@ public class BTTree {
 				continue;
 			}
 			for (Meeting mt : ts.get(i)) {
-				if (mt == m) {
-					continue;
-				}
 				//System.out.println("Given meeting: "+m);
 				//System.out.println(setOfMeetings);
 				//System.out.println("Current checked meeting: "+mt);
@@ -48,11 +59,13 @@ public class BTTree {
 	}
 
 	public boolean backTracking(BTTreeNode n) {
+		//System.out.println("Meetings to assign: " + n.meetings);
 		if (n.meetings.isEmpty()) {
 			this.solution = n;
 			return true;
 		}
 		Meeting m = n.meetings.poll();
+		//System.out.println("Trying meeting : " + m.name);
 		//System.out.println(m);
 		for (int i = 1; i < n.timeSlots.size(); i++) {
 			if (checkAssignment(m, i, n.timeSlots)) {
@@ -62,19 +75,16 @@ public class BTTree {
 				if (backTracking(child)) {
 					return true;
 				}
-				else continue;
-				
 			}
 		}
-		n.meetings.add(m);
-		System.out.println(n.meetings);
+		System.out.println("Meetings to assign: " + n.meetings);
 		return false;
 	}
 	
 	public void printSolution() {
 		System.out.println("Meetings Arranged");
 		int[] meetings = new int[c.numOfMeetings+1];
-		for (int i=1; i<= c.numOfMeetings; i++) {
+		for (int i=1; i < this.solution.timeSlots.size(); i++) {
 			if (this.solution.timeSlots.get(i) != null) {
 				for (Meeting m : this.solution.timeSlots.get(i)) {
 					meetings[m.name] = i;
