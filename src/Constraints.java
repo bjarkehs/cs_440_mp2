@@ -107,6 +107,9 @@ public class Constraints {
 						y++;
 					}
 				}
+				for (Meeting meet : this.meetings) {
+					meet.createSetOfConflictingMeetings();
+				}
 			}
 			finally {
 				input.close();
