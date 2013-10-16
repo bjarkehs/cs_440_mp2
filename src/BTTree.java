@@ -19,23 +19,8 @@ public class BTTree {
 	
 	public boolean checkAssignment(Meeting m, int loc, List<List<Meeting>> ts) {
 		//System.out.println("Meeting: "+ m.name);
-		Set<Meeting> setOfMeetings = new HashSet<Meeting>();
-		for (Employee emp : m.employees) {
-			setOfMeetings.addAll(emp.meetings);
-		}
 		
 		//System.out.println("Conflicting meetings: " + setOfMeetings);
-		
-		Set<Meeting> timeSlotMeetings = new HashSet<Meeting>();
-		
-		for (List<Meeting> lm : ts) {
-			timeSlotMeetings.addAll(lm);
-		}
-		
-		if (timeSlotMeetings.contains(m)) {
-			System.out.println("Already there");
-			return false;
-		}
 		
 		//System.out.println("Meetings: " +ts.get(loc) + " at timeslot: " +loc);
 		for (int i = (loc-2); i <= loc+2; i++) {
@@ -49,7 +34,7 @@ public class BTTree {
 				//System.out.println("Contains: " + setOfMeetings.contains(mt));
 				//System.out.println("Travel time: "+ c.traveltimes[m.name][mt.name] +" > Distance: "+Math.abs(loc-i));
 				//System.out.println("Traveltime clause: " + (c.traveltimes[m.name][mt.name] > Math.abs(loc-i)));
-				if (setOfMeetings.contains(mt) && (c.traveltimes[m.name][mt.name] >= Math.abs(loc-i))) {
+				if (m.conflictingMeetings.contains(mt) && (c.traveltimes[m.name][mt.name] >= Math.abs(loc-i))) {
 					//System.out.println("Cannot be in this");
 					return false;
 				}
@@ -77,7 +62,7 @@ public class BTTree {
 				}
 			}
 		}
-		System.out.println("Meetings to assign: " + n.meetings);
+		//System.out.println("Meetings to assign: " + n.meetings);
 		return false;
 	}
 	
