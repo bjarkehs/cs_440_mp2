@@ -1,69 +1,91 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package war.game;
+
 import java.io.*;
 import java.util.regex.*;
-/**
- *
- * @author Steve
- * ***MAIN CLASS***
- * Progress so far:
- * WarGame.java: Reads a maze in and prints it out. Doesn't execute any game instances yet.
- * Agent.java: Paradrop method should be complete or close to complete. M1 Death Blitz needs work.
- * Piece.java: Class representing a game piece that belongs to a player.
- * Quadtree: Class representing a tree of the possible moves a player can make. Needs to be implemented.
- */
+import war.game.Main.Agent;
+
 public class WarGame {
+	
+	public int[][] map;
+	public Agent[][] occupied;
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Exception{
-        // TODO code application logic here
-        int[][] map = new int[6][6];
-        FileReader f = new FileReader("Sevastopol.txt");
-        BufferedReader b = new BufferedReader(f);
-        String s = "";
-        int j = 0;
-        int k = 0;
-        Pattern p = Pattern.compile("\\d+");
-        Matcher m;
-        while ((s = b.readLine()) != null) {
-            m = p.matcher(s);
-            while (m.find()) {
-                map[j][k] = Integer.parseInt(m.group()); // Returns the number as a string. So use Integer.parseInt(m.group()) to get the integer
-                k++;
-                if (k >= 6)
-                    break;
-            }
-            j++;
-            k = 0;
+	
+	public WarGame(WarGame wg) {
+		this.map = wg.map.clone();
+		this.occupied = wg.occupied.clone();
+	}
+	
+    public WarGame(String filePath) {
+        this.map = new int[6][6];
+        this.occupied = new Agent[6][6];
+        
+        try {
+	        FileReader f = new FileReader(filePath);
+	        BufferedReader b = new BufferedReader(f);
+	        String s = null;
+	        int j = 0;
+	        int k = 0;
+	        Pattern p = Pattern.compile("\\d+");
+	        Matcher m;
+	        while ((s = b.readLine()) != null) {
+	            m = p.matcher(s);
+	            while (m.find()) {
+	                map[j][k] = Integer.parseInt(m.group()); // Returns the number as a string. So use Integer.parseInt(m.group()) to get the integer
+	                k++;
+	                if (k >= 6) {
+	                    break;
+	                }
+	            }
+	            j++;
+	            k = 0;
+	        }
+	        f.close();
         }
-        for (int i = 0;i < 6;i++){
-            for (int l = 0;l < 6;l++){
-                System.out.print(map[i][l] + " ");
+		catch (Exception ex){
+			ex.printStackTrace();
+	    }
+        
+        for (int i = 0; i < 6; i++){
+            for (int l = 0; l < 6; l++){
+            	this.occupied[i][l] = Agent.NEUTRAL;
+            }
+        }
+    }
+    
+    public void printMap() {
+    	String niceOutput = null;
+        for (int i = 0; i < 6; i++){
+            for (int l = 0; l < 6; l++){
+            	niceOutput = String.format("%1$2s ", map[i][l]);
+                System.out.print(niceOutput);
             }
             System.out.println();
         }
-        
-        f.close();
-        
-        Agent blue = new Agent("blue");
-        Agent green = new Agent("green");
-        
-        Quadtree gameTree = new Quadtree(0,0,map[0][0]);
-        for (int i = 0;i < map.length;i++) {
-            for (j = 0;j < map[0].length;j++) {
-                gameTree.add(i, j, map[i][j]);
+    }
+    
+    public void printOccupiedMap() {
+    	String niceOutput = null;
+        for (int i = 0; i < 6; i++){
+            for (int l = 0; l < 6; l++){
+            	String agent = null;
+            	switch (occupied[i][l]) {
+            		case NEUTRAL:
+            			agent = "n";
+            			break;
+            		case BLUE:
+            			agent = "b";
+            			break;
+            		case GREEN:
+            			agent = "g";
+            			break;
+            	}
+            	niceOutput = String.format("%1$2s ", agent);
+                System.out.print(niceOutput);
             }
-        }
-        
-        int gameCount = 0;
-        while (gameCount < 36) {
-            gameCount++;
-            break;
+            System.out.println();
         }
     }
 }
