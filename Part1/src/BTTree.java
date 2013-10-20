@@ -4,6 +4,7 @@ public class BTTree {
 	public BTTreeNode root = new BTTreeNode();
 	public BTTreeNode solution = new BTTreeNode();
 	private Constraints c;
+	public int noOfAssignments = 0;
 	
 	public BTTree(Constraints c) {
 		//System.out.println("t = "+t+" , m = "+m);
@@ -57,6 +58,7 @@ public class BTTree {
 				BTTreeNode child = new BTTreeNode(n.meetings,n);
 				List<Meeting> temp = child.timeSlots.get(i);
 				temp.add(m);
+				this.noOfAssignments++;
 				if (backTracking(child)) {
 					return true;
 				}
@@ -68,6 +70,7 @@ public class BTTree {
 	
 	public void printSolution() {
 		System.out.println("Meetings Arranged");
+		System.out.println("Number of attempted variable assignments: "+this.noOfAssignments);
 		int[] meetings = new int[c.numOfMeetings+1];
 		for (int i=1; i < this.solution.timeSlots.size(); i++) {
 			if (this.solution.timeSlots.get(i) != null) {

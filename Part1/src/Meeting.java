@@ -31,7 +31,7 @@ public class Meeting {
 		for (Employee emp : this.employees) {
 			this.conflictingMeetings.addAll(emp.meetings);
 		}
-		System.out.println(conflictingMeetings);
+		//System.out.println(conflictingMeetings);
 	}
 	
 	@Override
