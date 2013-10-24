@@ -3,7 +3,7 @@ package war.game;
 public class Main {
 	
 	public enum Move {
-		PARADROP, BLITZ
+		NONE, PARADROP, BLITZ
 	}
 	
 	public enum Agent {
@@ -26,12 +26,12 @@ public class Main {
 		for (int i = 0; i < 36; i++) {
 			oldNode = newNode;
 			if (i == 0) {
-				gt.minimax(currentAgent, newNode, true);
+				gt.minimax(currentAgent, newNode, true, 3);
 				currentAgent = Agent.GREEN;
 				continue;
 			}
 			newNode = new GameTreeNode(oldNode);
-			gt.minimax(currentAgent, newNode, true);
+			gt.minimax(currentAgent, newNode, true, 3);
 			if (currentAgent == Agent.BLUE) {
 				currentAgent = Agent.GREEN;
 			} else {
@@ -41,22 +41,9 @@ public class Main {
 				break;
 			}
 		}
-        
-//      Agent blue = new Agent("blue");
-//      Agent green = new Agent("green");
-//      
-//      Quadtree gameTree = new Quadtree(0,0,map[0][0]);
-//      for (int i = 0;i < map.length; i++) {
-//          for (int j = 0; j < map[0].length; j++) {
-//              gameTree.add(i, j, map[i][j]);
-//          }
-//      }
-//      
-//      int gameCount = 0;
-//      while (gameCount < 36) {
-//          gameCount++;
-//          break;
-//      }
+		
+		System.out.println("Occupation of the map:");
+		wg.printOccupiedMap();
 	}
 
 }
