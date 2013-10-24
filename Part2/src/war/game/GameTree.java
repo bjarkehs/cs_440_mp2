@@ -9,6 +9,7 @@ public class GameTree {
 	public int maxNodesGreen;
     
     public GameTreeNode minimax(Agent ag, GameTreeNode node, boolean getMax, int maxDepth) {
+    	System.out.println("starts search at depth"+node.depth);
     	Agent enemy;
     	if (ag == Agent.BLUE) {
     		enemy = Agent.GREEN;
@@ -16,7 +17,7 @@ public class GameTree {
     		enemy = Agent.BLUE;
     	}
 
-    	if (maxDepth == 0) {
+    	if (node.depth == maxDepth) {
     		// No more recursion. This is a leaf node. 
     		node.value = calculateScore(ag, enemy, node, getMax);
     		System.out.println(node.value);
@@ -36,7 +37,7 @@ public class GameTree {
     	    	child.moveRow = i;
     	    	child.moveCol = j;
     			child = performMove(ag, child);
-    			minimax(enemy, child, !getMax, maxDepth-1);
+    			minimax(enemy, child, !getMax, maxDepth);
     			if (currentMinMax == null) {
     				currentMinMax = child;
     			} else {

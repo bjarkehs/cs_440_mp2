@@ -26,12 +26,15 @@ public class Main {
 		for (int i = 0; i < 36; i++) {
 			oldNode = newNode;
 			if (i == 0) {
+				System.out.println("player is blue");
 				gt.minimax(currentAgent, newNode, true, 3);
 				currentAgent = Agent.GREEN;
 				continue;
 			}
 			newNode = new GameTreeNode(oldNode);
+			System.out.println("player changes to : "+currentAgent);
 			gt.minimax(currentAgent, newNode, true, 3);
+			System.out.println("after player changed");
 			if (currentAgent == Agent.BLUE) {
 				currentAgent = Agent.GREEN;
 			} else {
