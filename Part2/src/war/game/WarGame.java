@@ -6,6 +6,7 @@ import war.game.Main.Agent;
 
 public class WarGame {
 	
+	public int size;
 	public int[][] map;
 	public Agent[][] occupied;
 
@@ -14,8 +15,9 @@ public class WarGame {
      */
 	
 	public WarGame(WarGame wg) {
+		this.size = wg.size;
 		this.map = wg.map;
-		this.occupied = new Agent[6][6];
+		this.occupied = new Agent[size][size];
 		for (int i = 0; i < wg.occupied.length; i++) {
 			for (int j = 0; j < wg.occupied[i].length; j++) {
 				this.occupied[i][j] = wg.occupied[i][j];
@@ -23,24 +25,36 @@ public class WarGame {
 		}
 	}
 	
-    public WarGame(String filePath) {
-        this.map = new int[6][6];
-        this.occupied = new Agent[6][6];
-        
+    public WarGame(String filePath) {        
         try {
 	        FileReader f = new FileReader(filePath);
 	        BufferedReader b = new BufferedReader(f);
 	        String s = null;
 	        int j = 0;
 	        int k = 0;
+	        int theSize = 0;
 	        Pattern p = Pattern.compile("\\d+");
 	        Matcher m;
+	        boolean first = true;
+	        b.mark(7);
 	        while ((s = b.readLine()) != null) {
+	        	m = p.matcher(s);
+	            while (m.find()) {
+	                theSize++;
+	            }
+	        	if (first) {
+	        		this.size = theSize;
+	        		b.reset();
+	        		first = false;
+	                this.map = new int[size][size];
+	                this.occupied = new Agent[size][size];
+	        		continue;
+	        	}
 	            m = p.matcher(s);
 	            while (m.find()) {
 	                map[j][k] = Integer.parseInt(m.group()); // Returns the number as a string. So use Integer.parseInt(m.group()) to get the integer
 	                k++;
-	                if (k >= 6) {
+	                if (k >= this.size) {
 	                    break;
 	                }
 	            }
@@ -53,8 +67,8 @@ public class WarGame {
 			ex.printStackTrace();
 	    }
         
-        for (int i = 0; i < 6; i++){
-            for (int l = 0; l < 6; l++){
+        for (int i = 0; i < size; i++){
+            for (int l = 0; l < size; l++){
             	this.occupied[i][l] = Agent.NEUTRAL;
             }
         }
@@ -62,8 +76,8 @@ public class WarGame {
     
     public void printMap() {
     	String niceOutput = null;
-        for (int i = 0; i < 6; i++){
-            for (int l = 0; l < 6; l++){
+        for (int i = 0; i < size; i++){
+            for (int l = 0; l < size; l++){
             	niceOutput = String.format("%1$2s ", map[i][l]);
                 System.out.print(niceOutput);
             }
@@ -73,8 +87,8 @@ public class WarGame {
     
     public void printOccupiedMap() {
     	String niceOutput = null;
-        for (int i = 0; i < 6; i++){
-            for (int l = 0; l < 6; l++){
+        for (int i = 0; i < size; i++){
+            for (int l = 0; l < size; l++){
             	String agent = null;
             	switch (occupied[i][l]) {
             		case NEUTRAL:
