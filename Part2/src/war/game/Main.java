@@ -11,7 +11,8 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		WarGame wg = new WarGame("Sevastopol.txt");
+		WarGame wg = new WarGame("maps/Westerplatte.txt");
+		int maxDepth = 3;
 		
 		System.out.println("The map:");
 		wg.printMap();
@@ -21,32 +22,34 @@ public class Main {
 		
 		Agent currentAgent = Agent.BLUE;
 		GameTree gt = new GameTree();
-		GameTreeNode oldNode = null;
-		GameTreeNode newNode = new GameTreeNode(wg); 
-		for (int i = 0; i < 36; i++) {
+		GameTreeNode oldNode = new GameTreeNode(wg);
+		GameTreeNode resultNode = null;
+		System.out.println("Starting game");
+		System.out.println("Turn: 1");
+		gt.minimax(currentAgent, oldNode, true, maxDepth);
+//		System.out.println("Played as: " + currentAgent);
+		currentAgent = Agent.GREEN;
+		for (int i = 1; i < 36; i++) {
+			System.out.println("Turn: " + (i+1));
+			GameTreeNode newNode = new GameTreeNode(oldNode, true);
+//			System.out.println("NEW MOVE");
+//			System.out.println("Player is: "+currentAgent);
+//			newNode.wg.printOccupiedMap();
+			gt.minimax(currentAgent, newNode, true, maxDepth);
+//			System.out.println("After move:");
+//			newNode.wg.printOccupiedMap();
 			oldNode = newNode;
-			if (i == 0) {
-				System.out.println("player is blue");
-				gt.minimax(currentAgent, newNode, true, 3);
-				currentAgent = Agent.GREEN;
-				continue;
-			}
-			newNode = new GameTreeNode(oldNode);
-			System.out.println("player changes to : "+currentAgent);
-			gt.minimax(currentAgent, newNode, true, 3);
-			System.out.println("after player changed");
 			if (currentAgent == Agent.BLUE) {
 				currentAgent = Agent.GREEN;
 			} else {
 				currentAgent = Agent.BLUE;
 			}
-			if (i > 4) {
-				break;
-			}
+			resultNode = newNode;
 		}
 		
-		System.out.println("Occupation of the map:");
-		wg.printOccupiedMap();
+		System.out.println("End-game map: ");
+		resultNode.wg.printOccupiedMap();
+		resultNode.wg.printScores();
 	}
 
 }

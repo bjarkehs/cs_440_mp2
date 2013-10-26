@@ -14,8 +14,13 @@ public class WarGame {
      */
 	
 	public WarGame(WarGame wg) {
-		this.map = wg.map.clone();
-		this.occupied = wg.occupied.clone();
+		this.map = wg.map;
+		this.occupied = new Agent[6][6];
+		for (int i = 0; i < wg.occupied.length; i++) {
+			for (int j = 0; j < wg.occupied[i].length; j++) {
+				this.occupied[i][j] = wg.occupied[i][j];
+			}
+		}
 	}
 	
     public WarGame(String filePath) {
@@ -87,5 +92,22 @@ public class WarGame {
             }
             System.out.println();
         }
+    }
+    
+    public void printScores() {
+    	int greenScore = 0;
+    	int blueScore = 0;
+    	for (int i = 0; i < this.occupied.length; i++) {
+    		for (int j = 0; j < this.occupied[i].length; j++) {
+    			if (this.occupied[i][j] == Agent.BLUE) {
+    				blueScore += this.map[i][j];
+    			}
+    			else if (this.occupied[i][j] == Agent.GREEN) {
+    				greenScore += this.map[i][j];
+    			}
+    		}
+    	}
+    	
+    	System.out.println("Blue: " + blueScore + ", Green: " + greenScore);
     }
 }

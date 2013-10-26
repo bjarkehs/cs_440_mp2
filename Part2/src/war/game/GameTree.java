@@ -9,7 +9,7 @@ public class GameTree {
 	public int maxNodesGreen;
     
     public GameTreeNode minimax(Agent ag, GameTreeNode node, boolean getMax, int maxDepth) {
-    	System.out.println("starts search at depth"+node.depth);
+//    	System.out.println("Depth: "+node.depth);
     	Agent enemy;
     	if (ag == Agent.BLUE) {
     		enemy = Agent.GREEN;
@@ -17,36 +17,43 @@ public class GameTree {
     		enemy = Agent.BLUE;
     	}
 
-    	if (node.depth == maxDepth) {
+    	if (node.depth >= maxDepth) {
     		// No more recursion. This is a leaf node. 
     		node.value = calculateScore(ag, enemy, node, getMax);
-    		System.out.println(node.value);
+//    		System.out.println(node.value);
     		return node;
     	}
     	
     	GameTreeNode currentMinMax = null;
-    	
+//    	System.out.println("Printing the node's map");
+//    	node.wg.printOccupiedMap();
     	for (int i = 0; i < node.wg.map.length; i++) {
     		for (int j = 0; j < node.wg.map[i].length; j++) {
     			Move mv = checkWhichMove(ag, node, i, j);
     			if (mv == Move.NONE) {
     				continue;
     			}
-    	    	GameTreeNode child = new GameTreeNode(node);
+    	    	GameTreeNode child = new GameTreeNode(node, false);
     	    	child.move = mv;
     	    	child.moveRow = i;
     	    	child.moveCol = j;
     			child = performMove(ag, child);
+//    			System.out.println("Printing the child's map");
+//    			child.wg.printOccupiedMap();
+//    			System.out.println("Printing the child parent's map");
+//    			child.parent.wg.printOccupiedMap();
+//    			System.out.println("Node's value: "+ node.value);
     			minimax(enemy, child, !getMax, maxDepth);
-    			if (currentMinMax == null) {
-    				currentMinMax = child;
-    			} else {
-    				if ((getMax && currentMinMax.value < child.value) || (!getMax && currentMinMax.value > child.value)) {
-    					currentMinMax = child;
-    				}
-    			}
+				if (currentMinMax == null || (getMax && currentMinMax.value < child.value) || (!getMax && currentMinMax.value > child.value)) {
+//					if (currentMinMax != null) {
+//						System.out.println("Setting child because its value is " + child.value + " which is larger/smaller(true/false)[" + getMax + "] than " + currentMinMax.value);
+//					}
+					currentMinMax = child;
+				}
     		}
     	}
+    	
+//    	System.out.println("Returning from non-leaf");
     	
     	if (currentMinMax != null) {
 	    	node.value = currentMinMax.value;
@@ -99,26 +106,49 @@ public class GameTree {
     	}
 
 		node.wg.occupied[row][col] = ag;
+		boolean hasAlly = false;
     	if (mv == Move.BLITZ) {
     		if (row != 0) {
-    			if (node.wg.occupied[row-1][col] == enemy) {
-    				node.wg.occupied[row-1][col] = ag;
+    			if (node.wg.occupied[row-1][col] == ag) {
+    				hasAlly = true;
     			}
     		}
     		if (row < node.wg.map.length-1) {
-    			if (node.wg.occupied[row+1][col] == enemy) {
-    				node.wg.occupied[row+1][col] = ag;
+    			if (node.wg.occupied[row+1][col] == ag) {
+    				hasAlly = true;
     			}
     		}
     		if (col != 0) {
-    			if (node.wg.occupied[row][col-1] == enemy) {
-    				node.wg.occupied[row][col-1] = ag;
+    			if (node.wg.occupied[row][col-1] == ag) {
+    				hasAlly = true;
     			}
     		}
     		if (col < node.wg.map[row].length-1) {
-    			if (node.wg.occupied[row][col+1] == enemy) {
-    				node.wg.occupied[row][col+1] = ag;
+    			if (node.wg.occupied[row][col+1] == ag) {
+    				hasAlly = true;
     			}
+    		}
+    		if (hasAlly) {
+	    		if (row != 0) {
+	    			if (node.wg.occupied[row-1][col] == enemy) {
+	    				node.wg.occupied[row-1][col] = ag;
+	    			}
+	    		}
+	    		if (row < node.wg.map.length-1) {
+	    			if (node.wg.occupied[row+1][col] == enemy) {
+	    				node.wg.occupied[row+1][col] = ag;
+	    			}
+	    		}
+	    		if (col != 0) {
+	    			if (node.wg.occupied[row][col-1] == enemy) {
+	    				node.wg.occupied[row][col-1] = ag;
+	    			}
+	    		}
+	    		if (col < node.wg.map[row].length-1) {
+	    			if (node.wg.occupied[row][col+1] == enemy) {
+	    				node.wg.occupied[row][col+1] = ag;
+	    			}
+	    		}
     		}
     	}
     	
@@ -140,7 +170,7 @@ public class GameTree {
     	}
     	
     	Agent player;
-    	if (getMax) {
+    	if (!getMax) {
     		player = ag;
     	} else {
     		player = enemy;

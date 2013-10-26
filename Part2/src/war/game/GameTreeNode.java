@@ -12,10 +12,15 @@ public class GameTreeNode {
     public GameTreeNode parent;
     public int depth = 0;
     
-    public GameTreeNode(GameTreeNode p) {
+    public GameTreeNode(GameTreeNode p, boolean root) {
     	this(p.wg);
     	this.parent = p;
-    	this.depth = p.depth+1;
+    	if (root) {
+    		this.depth = 0;
+    	}
+    	else {
+    		this.depth = p.depth+1;
+    	}
     }
     
     public GameTreeNode(WarGame w) {
