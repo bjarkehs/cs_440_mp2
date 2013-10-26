@@ -30,7 +30,7 @@ public class Main {
 		System.out.println("Turn: 1");
 		gt.minimax(currentAgent, oldNode, true, maxDepth);
 //		System.out.println("Played as: " + currentAgent);
-		System.out.println(currentAgent+": "+oldNode.move+" "+column.charAt(oldNode.moveCol)+oldNode.moveRow);
+		System.out.println(currentAgent+": "+oldNode.move+" "+column.charAt(oldNode.moveCol)+(oldNode.moveRow+1));
 		System.out.println("Map after move:");
 		oldNode.wg.printOccupiedMap();
 		currentAgent = Agent.GREEN;
@@ -45,7 +45,7 @@ public class Main {
 //			System.out.println("After move:");
 //			newNode.wg.printOccupiedMap();
 			oldNode = newNode;
-			System.out.println(currentAgent+": "+oldNode.move+" "+column.charAt(oldNode.moveCol)+oldNode.moveRow);
+			System.out.println(currentAgent+": "+oldNode.move+" "+column.charAt(oldNode.moveCol)+(oldNode.moveRow+1));
 			System.out.println("Map after move:");
 			oldNode.wg.printOccupiedMap();
 			if (currentAgent == Agent.BLUE) {
