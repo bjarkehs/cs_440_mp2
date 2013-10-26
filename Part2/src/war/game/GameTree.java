@@ -170,7 +170,7 @@ public class GameTree {
     	}
     	
     	Agent player;
-    	if (!getMax) {
+    	if (getMax) {
     		player = ag;
     	} else {
     		player = enemy;

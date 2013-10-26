@@ -11,7 +11,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		WarGame wg = new WarGame("maps/Westerplatte.txt");
+		WarGame wg = new WarGame("maps/Keren.txt");
 		int maxDepth = 3;
 		
 		System.out.println("The map:");
