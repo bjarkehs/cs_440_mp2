@@ -20,17 +20,23 @@ public class Main {
 		System.out.println("Occupation of the map:");
 		wg.printOccupiedMap();
 		
+		String column = "ABCDEF";
+		
 		Agent currentAgent = Agent.BLUE;
 		GameTree gt = new GameTree();
 		GameTreeNode oldNode = new GameTreeNode(wg);
-		GameTreeNode resultNode = null;
+		
 		System.out.println("Starting game");
 		System.out.println("Turn: 1");
 		gt.minimax(currentAgent, oldNode, true, maxDepth);
 //		System.out.println("Played as: " + currentAgent);
+		System.out.println(currentAgent+": "+oldNode.move+" "+column.charAt(oldNode.moveCol)+oldNode.moveRow);
+		System.out.println("Map after move:");
+		oldNode.wg.printOccupiedMap();
 		currentAgent = Agent.GREEN;
+		
 		for (int i = 1; i < 36; i++) {
-			System.out.println("Turn: " + (i+1));
+//			System.out.println("Turn: " + (i+1));
 			GameTreeNode newNode = new GameTreeNode(oldNode, true);
 //			System.out.println("NEW MOVE");
 //			System.out.println("Player is: "+currentAgent);
@@ -39,17 +45,19 @@ public class Main {
 //			System.out.println("After move:");
 //			newNode.wg.printOccupiedMap();
 			oldNode = newNode;
+			System.out.println(currentAgent+": "+oldNode.move+" "+column.charAt(oldNode.moveCol)+oldNode.moveRow);
+			System.out.println("Map after move:");
+			oldNode.wg.printOccupiedMap();
 			if (currentAgent == Agent.BLUE) {
 				currentAgent = Agent.GREEN;
 			} else {
 				currentAgent = Agent.BLUE;
 			}
-			resultNode = newNode;
 		}
 		
 		System.out.println("End-game map: ");
-		resultNode.wg.printOccupiedMap();
-		resultNode.wg.printScores();
+		oldNode.wg.printOccupiedMap();
+		oldNode.wg.printScores();
 	}
 
 }
