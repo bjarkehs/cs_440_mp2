@@ -78,7 +78,7 @@ public class GameTree {
     	return currentMinMaxValue;
     }
     
-    public int alpha_beta(Agent ag, GameTreeNode node, boolean getMax, int maxDepth, int moves) {
+    public int alpha_beta(Agent ag, GameTreeNode node, boolean getMax, int maxDepth, int moves, int alpha, int beta) {
 //    	System.out.println("Depth: "+node.depth);
     	Agent enemy;
     	if (ag == Agent.BLUE) {
@@ -97,7 +97,12 @@ public class GameTree {
     		return node.value;
     	}
     	
-    	int currentMinMaxValue = -1;
+    	int currentMinMaxValue;
+    	if (getMax) {
+    		currentMinMaxValue = Integer.MIN_VALUE;
+    	} else {
+    		currentMinMaxValue = Integer.MAX_VALUE;
+    	}
     	Move currentMinMaxMove = Move.NONE;
     	int currentMinMaxRow = -1;
     	int currentMinMaxCol = -1;
@@ -119,31 +124,35 @@ public class GameTree {
 //    			System.out.println("Printing the child parent's map");
 //    			child.parent.wg.printOccupiedMap();
 //    			System.out.println("Node's value: "+ node.value);
-    			int value = minimax(enemy, child, !getMax, maxDepth, moves+1);
-				if (currentMinMaxValue == -1 || (getMax && currentMinMaxValue < value) || (!getMax && currentMinMaxValue > value)) {
-//					if (currentMinMax != null) {
-//						System.out.println("Setting child because its value is " + child.value + " which is larger/smaller(true/false)[" + getMax + "] than " + currentMinMax.value);
-//					}
+    			int value = alpha_beta(enemy, child, !getMax, maxDepth, moves+1, alpha, beta);
+				if ((getMax && currentMinMaxValue < value) || (!getMax && currentMinMaxValue > value)) {
 					currentMinMaxValue = value;
 	    	    	currentMinMaxMove = mv;
 	    	    	currentMinMaxRow = i;
 	    	    	currentMinMaxCol = j;
 				}
+    			if (getMax) {
+    				if (currentMinMaxValue >= beta) {
+    					return currentMinMaxValue;
+    				}
+    				alpha = Math.max(currentMinMaxValue, alpha);
+    			} else {
+    				if (currentMinMaxValue <= alpha) {
+    					return currentMinMaxValue;
+    				}
+    				beta = Math.min(currentMinMaxValue, beta);
+    			}
     		}
     	}
     	
 //    	System.out.println("Returning from non-leaf");
     	
-    	if (currentMinMaxValue != -1) {
-	    	node.value = currentMinMaxValue;
-	    	if (node.depth == 0) {
-		    	node.move = currentMinMaxMove;
-		    	node.moveRow = currentMinMaxRow;
-		    	node.moveCol = currentMinMaxCol;
-	    		node = performMove(ag, enemy, node);
-	    	}
-    	} else {
-    		System.out.println("Something weird happened");
+    	node.value = currentMinMaxValue;
+    	if (node.depth == 0) {
+	    	node.move = currentMinMaxMove;
+	    	node.moveRow = currentMinMaxRow;
+	    	node.moveCol = currentMinMaxCol;
+    		node = performMove(ag, enemy, node);
     	}
     	
     	return currentMinMaxValue;

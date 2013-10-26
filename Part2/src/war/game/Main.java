@@ -1,5 +1,9 @@
 package war.game;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 public class Main {
 	
 	public enum Move {
@@ -11,8 +15,23 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		WarGame wg = new WarGame("maps/Keren-small.txt");
-		int maxDepth = 7;
+		String wargame = args[0];
+		String blueGame = args[1];
+		String greenGame = args[2];
+		int maxDepthAlpha = 7;
+		int maxDepthMinimax = 3;
+		
+		WarGame wg = new WarGame("maps"+File.separator+wargame+".txt");
+		
+		String resultfile = wargame + "-" + blueGame + "_vs_" + greenGame + ".txt";
+		File f = new File("game_results"+File.separator+resultfile);
+		try {
+			f.createNewFile();
+			PrintStream out = new PrintStream(new FileOutputStream("game_results"+File.separator+resultfile));
+			System.setOut(out);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		System.out.println("The map:");
 		wg.printMap();
@@ -32,43 +51,49 @@ public class Main {
 		
 		GameTree gt = new GameTree();
 		long startTime = System.nanoTime();
-		gt.minimax(currentAgent, oldNode, true, maxDepth, 0);
+		if (blueGame.equalsIgnoreCase("alpha")) {
+			gt.alpha_beta(currentAgent, oldNode, true, maxDepthAlpha, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		} else {
+			gt.minimax(currentAgent, oldNode, true, maxDepthMinimax, 0);
+		}
 		long endTime = System.nanoTime();
 		long totalTime = endTime - startTime;
 		totalBlue += gt.maxNodes;
-//		System.out.println("Played as: " + currentAgent);
+		
 		System.out.println(currentAgent+": "+oldNode.move+" "+column.charAt(oldNode.moveCol)+(oldNode.moveRow+1));
 		System.out.println("Map after move:");
 		oldNode.wg.printOccupiedMap();
 		currentAgent = Agent.GREEN;
 		
-//		System.out.println("Size:" + wg.size);
-//		System.out.println("Moves:" + wg.size*wg.size);
 		int amountOfMoves = wg.size*wg.size;
 		for (int i = 1; i < amountOfMoves; i++) {
 			System.out.println("Turn: " + (i+1));
 			GameTreeNode newNode = new GameTreeNode(oldNode, true);
-//			System.out.println("NEW MOVE");
-//			System.out.println("Player is: "+currentAgent);
-//			newNode.wg.printOccupiedMap();
 			gt = new GameTree();
 			startTime = System.nanoTime();
-			gt.minimax(currentAgent, newNode, true, maxDepth, i);
+			if (currentAgent == Agent.BLUE) {
+				if (blueGame.equalsIgnoreCase("alpha")) {
+					gt.alpha_beta(currentAgent, newNode, true, maxDepthAlpha, i, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				} else { 
+					gt.minimax(currentAgent, newNode, true, maxDepthMinimax, i);
+				}
+				totalBlue += gt.maxNodes;
+				currentAgent = Agent.GREEN;
+			} else {
+				if (greenGame.equalsIgnoreCase("alpha")) {
+					gt.alpha_beta(currentAgent, newNode, true, maxDepthAlpha, i, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				} else { 
+					gt.minimax(currentAgent, newNode, true, maxDepthMinimax, i);
+				}
+				totalGreen += gt.maxNodes;
+				currentAgent = Agent.BLUE;
+			}
 			endTime = System.nanoTime();
 			totalTime += endTime - startTime;
-//			System.out.println("After move:");
-//			newNode.wg.printOccupiedMap();
 			oldNode = newNode;
 			System.out.println(currentAgent+": "+oldNode.move+" "+column.charAt(oldNode.moveCol)+(oldNode.moveRow+1));
 			System.out.println("Map after move:");
 			oldNode.wg.printOccupiedMap();
-			if (currentAgent == Agent.BLUE) {
-				totalBlue += gt.maxNodes;
-				currentAgent = Agent.GREEN;
-			} else {
-				totalGreen += gt.maxNodes;
-				currentAgent = Agent.BLUE;
-			}
 		}
 		
 		System.out.println("End-game map: ");
