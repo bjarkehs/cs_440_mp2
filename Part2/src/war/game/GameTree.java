@@ -5,7 +5,7 @@ import war.game.Main.Move;
 
 public class GameTree {
     
-	public int maxNodes = 0;
+	public long maxNodes = 0;
     
     public int minimax(Agent ag, GameTreeNode node, boolean getMax, int maxDepth, int moves) {
 //    	System.out.println("Depth: "+node.depth);
