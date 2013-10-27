@@ -158,7 +158,7 @@ public class GameTree {
     	return currentMinMaxValue;
     }
 
-    private Move checkWhichMove(Agent ag, GameTreeNode node, int row, int col) {
+    public Move checkWhichMove(Agent ag, GameTreeNode node, int row, int col) {
     	if (node.wg.occupied[row][col] != Agent.NEUTRAL) {
     		return Move.NONE;
     	} else {
@@ -186,7 +186,7 @@ public class GameTree {
     	return Move.PARADROP;
     }
     
-    private GameTreeNode performMove(Agent ag, Agent enemy, GameTreeNode node) {
+    public GameTreeNode performMove(Agent ag, Agent enemy, GameTreeNode node) {
     	Move mv = node.move;
     	int row = node.moveRow;
     	int col = node.moveCol;

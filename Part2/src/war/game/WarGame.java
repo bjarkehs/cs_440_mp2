@@ -76,7 +76,17 @@ public class WarGame {
     
     public void printMap() {
     	String niceOutput = null;
+    	String column = "ABCDEFGHIJ";
+		niceOutput = String.format("%1$2s  ", " ");
+        System.out.print(niceOutput);
+    	for (int k = 0; k < size; k++) {
+    		niceOutput = String.format("%1$2s ", column.charAt(k));
+            System.out.print(niceOutput);
+    	}
+        System.out.println();
         for (int i = 0; i < size; i++){
+    		niceOutput = String.format("%1$2s |", i+1);
+            System.out.print(niceOutput);
             for (int l = 0; l < size; l++){
             	niceOutput = String.format("%1$2s ", map[i][l]);
                 System.out.print(niceOutput);
@@ -87,7 +97,17 @@ public class WarGame {
     
     public void printOccupiedMap() {
     	String niceOutput = null;
+    	String column = "ABCDEFGHIJ";
+		niceOutput = String.format("%1$2s  ", " ");
+        System.out.print(niceOutput);
+    	for (int k = 0; k < size; k++) {
+    		niceOutput = String.format("%1$2s ", column.charAt(k));
+            System.out.print(niceOutput);
+    	}
+        System.out.println();
         for (int i = 0; i < size; i++){
+    		niceOutput = String.format("%1$2s |", i+1);
+            System.out.print(niceOutput);
             for (int l = 0; l < size; l++){
             	String agent = null;
             	switch (occupied[i][l]) {

@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 public class Main {
+	
+	private static String column = "ABCDEF";
 	
 	public enum Move {
 		NONE, PARADROP, BLITZ
@@ -17,29 +20,35 @@ public class Main {
 
 	public static void main(String[] args) {
 		String wargame = args[0];
-		String blueGame = args[1];
-		String greenGame = args[2];
+		String blueGameInput = args[1];
+		String greenGameInput = args[2];
 		int maxDepthAlpha = Integer.parseInt(args[3]);
 		int maxDepthMinimax = Integer.parseInt(args[4]);
 		
 		WarGame wg = new WarGame("maps"+File.separator+wargame+".txt");
 		
-		int blueDepth;
-		if (blueGame.equalsIgnoreCase("alpha")) {
+		int blueDepth = 0;
+		String blueGame = null;
+		if (blueGameInput.equalsIgnoreCase("alpha")) {
 			blueGame = "alpha-beta";
 			blueDepth = maxDepthAlpha;
-		} else {
+		} else if (blueGameInput.equalsIgnoreCase("minimax")) {
 			blueGame = "minimax";
 			blueDepth = maxDepthMinimax;
+		} else if (blueGameInput.equalsIgnoreCase("human")) {
+			blueGame = "human";
 		}
 		
-		int greenDepth;
-		if (greenGame.equalsIgnoreCase("alpha")) {
+		int greenDepth = 0;
+		String greenGame = null;
+		if (greenGameInput.equalsIgnoreCase("alpha")) {
 			greenGame = "alpha-beta";
 			greenDepth = maxDepthAlpha;
-		} else {
+		} else if (greenGameInput.equalsIgnoreCase("minimax")) {
 			greenGame = "minimax";
 			greenDepth = maxDepthMinimax;
+		} else if (greenGameInput.equalsIgnoreCase("human")) {
+			greenGame = "human";
 		}
 		String resultfile = wargame + "-" + blueGame + blueDepth + "_vs_" + greenGame + greenDepth + ".txt";
 		
@@ -71,10 +80,10 @@ public class Main {
 //		System.out.println("Occupation of the map:");
 //		wg.printOccupiedMap();
 		
-		String column = "ABCDEF";
-		
 		Agent currentAgent = Agent.BLUE;
 		GameTreeNode oldNode = new GameTreeNode(wg);
+		
+		Scanner in = new Scanner(System.in);
 		
 		long totalGreen = 0;
 		long totalBlue = 0;
@@ -85,8 +94,10 @@ public class Main {
 		long startTime = System.nanoTime();
 		if (blueGame.equalsIgnoreCase("alpha-beta")) {
 			gt.alpha_beta(currentAgent, oldNode, true, maxDepthAlpha, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
-		} else {
+		} else if (blueGame.equalsIgnoreCase("minimax")) {
 			gt.minimax(currentAgent, oldNode, true, maxDepthMinimax, 0);
+		} else if (blueGame.equalsIgnoreCase("human")) {
+			takeHumanInput(gt, oldNode, currentAgent, in);
 		}
 		long endTime = System.nanoTime();
 		long totalTime = endTime - startTime;
@@ -107,16 +118,20 @@ public class Main {
 			if (currentAgent == Agent.BLUE) {
 				if (blueGame.equalsIgnoreCase("alpha-beta")) {
 					gt.alpha_beta(currentAgent, newNode, true, maxDepthAlpha, i, Integer.MIN_VALUE, Integer.MAX_VALUE);
-				} else { 
+				} else if (blueGame.equalsIgnoreCase("minimax")) { 
 					gt.minimax(currentAgent, newNode, true, maxDepthMinimax, i);
+				} else if (blueGame.equalsIgnoreCase("human")) {
+					takeHumanInput(gt, newNode, currentAgent, in);
 				}
 				totalBlue += gt.maxNodes;
 				currentAgent = Agent.GREEN;
 			} else {
 				if (greenGame.equalsIgnoreCase("alpha-beta")) {
 					gt.alpha_beta(currentAgent, newNode, true, maxDepthAlpha, i, Integer.MIN_VALUE, Integer.MAX_VALUE);
-				} else { 
+				} else if (greenGame.equalsIgnoreCase("minimax")) { 
 					gt.minimax(currentAgent, newNode, true, maxDepthMinimax, i);
+				} else if (greenGame.equalsIgnoreCase("human")) {
+					takeHumanInput(gt, newNode, currentAgent, in);
 				}
 				totalGreen += gt.maxNodes;
 				currentAgent = Agent.BLUE;
@@ -141,6 +156,37 @@ public class Main {
 		System.out.println("Avg amount of nodes/move: " + ((totalBlue+totalGreen)/amountOfMoves));
 		System.out.println();
 		System.out.println("Avg amount of time/move: " + ((float)totalTime/1000000000/amountOfMoves) + "s");
+	}
+	
+	private static void takeHumanInput(GameTree gt, GameTreeNode node, Agent currentAgent, Scanner in) {
+		Agent enemy;
+		if (currentAgent == Agent.BLUE) {
+			enemy = Agent.GREEN;
+		} else {
+			enemy = Agent.BLUE;
+		}
+		while(true) {
+			System.out.println("Please play "+currentAgent+"'s turn:");
+			System.out.println("The current map is:");
+			node.wg.printOccupiedMap();
+			String userInput = in.nextLine();
+			try {
+				int selectedColumn = column.indexOf(userInput.charAt(0));
+				int selectedRow = Integer.parseInt(""+userInput.charAt(1))-1;
+				Move mv = gt.checkWhichMove(currentAgent, node, selectedRow, selectedColumn);
+				if (mv != Move.NONE) {
+					node.move = mv;
+					node.moveRow = selectedRow;
+					node.moveCol = selectedColumn;
+					gt.performMove(currentAgent, enemy, node);
+					break;
+				} else {
+					System.out.println("Invalid move, please try again.");
+				}
+			} catch(Exception e) {
+				System.out.println("Input incorrect, please try again.");
+			}
+		}
 	}
 
 }
