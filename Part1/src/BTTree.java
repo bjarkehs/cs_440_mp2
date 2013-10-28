@@ -53,7 +53,16 @@ public class BTTree {
 		Meeting m = n.meetings.poll();
 		//System.out.println("Trying meeting : " + m.name);
 		//System.out.println(m);
+		
+		Comparator<TimeSlot> comparator = new TimeSlotComparator();
+		PriorityQueue<TimeSlot> slots = new PriorityQueue<TimeSlot>(n.timeSlots.size(), comparator);
+		
 		for (int i = 1; i < n.timeSlots.size(); i++) {
+			slots.add(new TimeSlot(i, n.timeSlots.get(i)));
+		}
+		
+		while (!slots.isEmpty()) {
+			int i = slots.poll().name;
 			if (checkAssignment(m, i, n.timeSlots)) {
 				BTTreeNode child = new BTTreeNode(n.meetings,n);
 				List<Meeting> temp = child.timeSlots.get(i);

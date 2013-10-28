@@ -1,0 +1,85 @@
+Alpha-beta Depth: 7.
+Minimax Depth: 3.
+
+Blue is using: human
+Green is using: human
+
+The map, Keren:
+     A  B  C  D  E  F 
+ 1 | 1  1  1  1  1  1 
+ 2 | 1  1  1  1  1  1 
+ 3 | 1  1  1  1  1  1 
+ 4 | 1  1  1  1  1  1 
+ 5 | 1  1  1  1  1  1 
+ 6 | 1  1  1  1  1  1 
+
+Starting game
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | n  n  n  n  n  n 
+BLUE: PARADROP C2
+Please play GREEN's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  b  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | n  n  n  n  n  n 
+GREEN: PARADROP C1
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  g  n  n  n 
+ 2 | n  n  b  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | n  n  n  n  n  n 
+BLUE: PARADROP D1
+Please play GREEN's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  g  b  n  n 
+ 2 | n  n  b  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | n  n  n  n  n  n 
+GREEN: PARADROP D2
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  g  b  n  n 
+ 2 | n  n  b  g  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | n  n  n  n  n  n 
+BLUE: BLITZ E1
+Please play GREEN's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  g  b  b  n 
+ 2 | n  n  b  g  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | n  n  n  n  n  n 
+GREEN: BLITZ E2
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  g  b  g  n 
+ 2 | n  n  b  g  g  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | n  n  n  n  n  n 
