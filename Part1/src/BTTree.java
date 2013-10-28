@@ -45,6 +45,9 @@ public class BTTree {
 	}
 
 	public boolean backTracking(BTTreeNode n) {
+		if (noOfAssignments > 0 && noOfAssignments % 1000000 == 0) {
+			System.out.println("Nodes expanded: " + noOfAssignments);
+		}
 		//System.out.println("Meetings to assign: " + n.meetings);
 		if (n.meetings.isEmpty()) {
 			this.solution = n;
@@ -54,11 +57,12 @@ public class BTTree {
 		//System.out.println("Trying meeting : " + m.name);
 		//System.out.println(m);
 		
+		// In order to do random variable selection, don't use comparator but shuffle the queue.
 		Comparator<TimeSlot> comparator = new TimeSlotComparator();
 		PriorityQueue<TimeSlot> slots = new PriorityQueue<TimeSlot>(n.timeSlots.size(), comparator);
 		
 		for (int i = 1; i < n.timeSlots.size(); i++) {
-			slots.add(new TimeSlot(i, n.timeSlots.get(i)));
+			slots.add(new TimeSlot(i, new ArrayList<Meeting>(n.timeSlots.get(i))));
 		}
 		
 		while (!slots.isEmpty()) {
