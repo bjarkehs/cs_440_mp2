@@ -1,0 +1,235 @@
+Alpha-beta Depth: 5.
+Minimax Depth: 0.
+
+Blue is using: human
+Green is using: alpha-beta
+
+The map, Sevastopol:
+     A  B  C  D  E  F 
+ 1 | 1  1  1  1  1  1 
+ 2 | 2  2  2  2  2  2 
+ 3 | 4  4  4  4  4  4 
+ 4 | 8  8  8  8  8  8 
+ 5 |16 16 16 16 16 16 
+ 6 |32 32 32 32 32 32 
+
+Starting game
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | n  n  n  n  n  n 
+BLUE: PARADROP A6
+GREEN: PARADROP B6
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | b  g  n  n  n  n 
+BLUE: PARADROP C6
+GREEN: PARADROP D6
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | b  g  b  g  n  n 
+BLUE: PARADROP E6
+GREEN: PARADROP F6
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | n  n  n  n  n  n 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP B5
+GREEN: PARADROP A5
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  n  n  n 
+ 5 | g  b  n  n  n  n 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP D5
+GREEN: PARADROP D4
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  g  n  n 
+ 5 | g  b  n  b  n  n 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP F5
+GREEN: PARADROP E5
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | n  n  n  g  n  n 
+ 5 | g  b  n  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: BLITZ B4
+GREEN: BLITZ A4
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | g  g  n  g  n  n 
+ 5 | g  b  n  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP E4
+GREEN: PARADROP C5
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  n  n  n  n  n 
+ 4 | g  g  n  g  b  n 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: BLITZ F4
+GREEN: BLITZ B3
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | n  g  n  n  n  n 
+ 4 | g  g  n  g  b  b 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP D3
+GREEN: BLITZ A3
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | g  g  n  b  n  n 
+ 4 | g  g  n  g  b  b 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: BLITZ E3
+GREEN: BLITZ C3
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  n  n 
+ 3 | g  g  g  g  b  n 
+ 4 | g  g  n  g  b  b 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP C4
+GREEN: PARADROP E2
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  g  n 
+ 3 | g  g  g  g  b  n 
+ 4 | g  g  b  g  b  b 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP F2
+GREEN: PARADROP F3
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  n  n  n 
+ 2 | n  n  n  n  g  b 
+ 3 | g  g  g  g  b  g 
+ 4 | g  g  b  g  b  b 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP E1
+GREEN: PARADROP D1
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  g  b  n 
+ 2 | n  n  n  n  g  b 
+ 3 | g  g  g  g  b  g 
+ 4 | g  g  b  g  b  b 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: BLITZ F1
+GREEN: BLITZ D2
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  n  g  b  b 
+ 2 | n  n  n  g  g  b 
+ 3 | g  g  g  g  b  g 
+ 4 | g  g  b  g  b  b 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP C2
+GREEN: BLITZ C1
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  n  g  g  b  b 
+ 2 | n  n  g  g  g  b 
+ 3 | g  g  g  g  b  g 
+ 4 | g  g  b  g  b  b 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP B2
+GREEN: BLITZ B1
+Please play BLUE's turn:
+The current map is:
+     A  B  C  D  E  F 
+ 1 | n  g  g  g  b  b 
+ 2 | n  g  g  g  g  b 
+ 3 | g  g  g  g  b  g 
+ 4 | g  g  b  g  b  b 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+BLUE: PARADROP A2
+GREEN: BLITZ A1
+
+End-game map: 
+     A  B  C  D  E  F 
+ 1 | g  g  g  g  b  b 
+ 2 | g  g  g  g  g  b 
+ 3 | g  g  g  g  b  g 
+ 4 | g  g  b  g  b  b 
+ 5 | g  b  g  b  g  b 
+ 6 | b  g  b  g  b  g 
+
+Blue: 176, Green: 202
+
+Total time for all moves: 220.8489s
+
+Nodes expanded by Blue: 0,
+and by Green: 27100448,
+giving a total of: 27100448
+
+Avg amount of nodes/move: 752790
+
+Avg amount of time/move: 6.1346917s
